@@ -1,0 +1,5 @@
+## Ansible command to run ansible playbook to deploy application on the development server
+ansible-playbook -i /home/ansible/ansible-k8s-deploy/hosts /home/ansible/ansible-k8s-deploy/deploy-k8s.yaml
+## Ansible command to run ansible playbook to create service so that we can access application external from the development server
+ansible-playbook -i /home/ansible/ansible-k8s-deploy/hosts /home/ansible/ansible-k8s-deploy/service-k8s.yaml
+

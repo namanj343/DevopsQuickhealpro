@@ -1,0 +1,14 @@
+## Create a jenkins jobs to do below work
+## Copy project from workspace directory to the directory where our Dockerfile is present
+## Below code will check wheather our copy present our not in the below directory 
+## if the directory is present then we just need to run the ansible -playbook which will create docker images
+## else if directory is not present then it will copy the file from workspace to the directory where dockerfile  is present
+if [ -d "/home/ansible/ansible-k8s-deploy" ] 
+then
+
+ansible-playbook -i /home/ansible/ansible-k8s-deploy/hosts /home/ansible/ansible-k8s-deploy/docker-image.yaml
+else
+cp -r /home/ansible/workspace/ansible-test /home/ansible/ansible-k8s-deploy
+ansible-playbook -i /home/ansible/ansible-k8s-deploy/hosts /home/ansible/ansible-k8s-deploy/docker-image.yaml
+
+fi

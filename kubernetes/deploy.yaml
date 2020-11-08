@@ -1,0 +1,39 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: qhmagento-deploy
+spec:
+  selector:
+    matchLabels:
+      app: qhmagento
+  replicas: 2
+# tells deployment to run 2 pods matching the template
+#  minReadyseconds: 20 ## wait for 10s before pod ready to launch new pods
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  template:
+    metadata:
+      labels:
+        app: qhmagento
+    spec:
+#      we can label the node using: kubectl label node <nodename> node-name=dev
+#      nodeSelector:
+#         <name-of-lable-we-have-given-to-node>: <values>
+#like     node-name: 'dev'
+      containers:
+      - name: qhmagento
+        image: namanj71/qhmagento
+        imagePullPolicy: Always
+#        resources:
+#          requests:
+#            cpu: "100m"
+#            memory: "100Mi"
+#          limit:
+#            cpu: "200m"
+#            memory: "500Mi"
+        ports:
+        - containerPort: 80

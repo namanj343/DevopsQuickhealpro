@@ -1,0 +1,12 @@
+---
+- name: create service for deployment
+  hosts: kubernetes
+#  become: true
+#  user: root
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.7
+
+  tasks:
+  - name: create a service
+    command: kubectl create -f /home/admin/kubernetes/service.yaml
+ 

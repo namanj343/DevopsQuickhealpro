@@ -1,0 +1,27 @@
+---
+- hosts: ansible
+#  become: true
+
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+
+  tasks:
+  - name: create docker image using war file
+    command: docker build -t quickheal:latest .
+    args:
+      chdir: /home/ansible/ansible-k8s-deploy
+
+  - name: create tag to image
+    command: docker tag quickheal:latest  namanj71/qhmagento
+
+  - name: Log into DockerHub
+    docker_login:
+      username: namanj71
+      password: PositiveVibe@123
+
+  - name: push image on to dockerhub
+    command: docker push namanj71/qhmagento
+
+  - name: remove docker images form ansible server
+    command: docker rmi quickheal:latest  namanj71/qhmagento
+    ignore_errors: yes
